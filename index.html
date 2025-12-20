@@ -4,12 +4,14 @@
   <meta charset="UTF-8">
   <title>TryAnder-TADV | info</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TryAnder (Alexander Tretyakov) — 17 y/o .NET & Unity developer from Russia.">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Roboto Mono', monospace; }
     body { background:#0a0a0a; color:#f0f0f0; min-height:100vh; overflow-x:hidden; }
 
-    /* анимация входа — чтобы не резко */
+    /* анимация входа*/
     .fade-in-up {
       opacity: 0;
       transform: translateY(20px);
@@ -55,17 +57,38 @@
       box-shadow:0 10px 30px rgba(0,0,0,0.2);
       animation-delay:0.3s;
     }
-    .avatar { width:100%; max-width:180px; border-radius:4px; border:1px solid rgba(255,255,255,0.1); transition:0.3s; }
-    .avatar:hover { border-color:#fff; box-shadow:0 0 15px rgba(255,255,255,0.1); }
+
+    /*МИКРОАНИМАЦИЯ АВАТАРА */
+    .avatar {
+      width:100%; max-width:180px; border-radius:4px;
+      border:1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+      transform: scale(1);
+    }
+    .avatar:hover {
+      transform: scale(1.03);
+      border-color: #fff;
+      box-shadow: 0 0 20px rgba(255,255,255,0.15);
+    }
 
     .info { display:flex; flex-direction:column; justify-content:center; }
     .info h1 { font-size:2.2rem; color:#fff; margin-bottom:12px; font-weight:500; }
     .profile-text { font-size:1.05rem; line-height:1.6; color:#e0e0e0; }
     .profile-text strong { font-weight:500; color:#fff; }
     .profile-text p { margin:12px 0; }
-    .flag { display:inline-block; width:20px; height:14px; margin-right:8px; vertical-align:middle; border:1px solid rgba(255,255,255,0.05); }
 
-    /* плеер — трек по кнопке + фоновое видео */
+    /*ПОДСВЕТКА ПРИ НАВЕДЕНИИ НА ССЫЛКИ*/
+    .profile-text a {
+      color: #aaa; text-decoration: none; transition: color 0.2s;
+    }
+    .profile-text a:hover {
+      color: #fff;
+      text-shadow: 0 0 8px rgba(255,255,255,0.3);
+    }
+
+    .flag { display:inline-block; width:20px; height:12px; margin-right:8px; vertical-align:baseline;}
+
+    /* плеер */
     .music-player { margin-top:25px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.05); }
     .track-info { opacity:0; transform:translateY(10px); transition:all 0.4s ease; margin-bottom:12px; text-align:center; font-size:0.95rem; }
     .track-info.visible { opacity:1; transform:translateY(0); }
@@ -77,89 +100,39 @@
     }
     .music-player button:hover { background:rgba(60,60,60,0.25); color:#fff; border-color:#fff; }
 
-    /* фоновое видео — скрыто до нажатия Play */
+    /* фоновое видео */
     video#bgVideo { position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:0.8s; z-index:-1; pointer-events:none; }
     body.video-active video#bgVideo { opacity:1; }
 
-    /* мобильная версия — всё сжимается, но читаемо */
+    /* футер с копирайтом */
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #777;
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.03);
+    }
+
+    /* мобильная версия */
     @media (max-width:520px){
-      header {
-        padding: 12px 16px;
-      }
-      .brand {
-        font-size:1.2rem;
-        flex-shrink: 1;
-        min-width: 0;
-      }
-      header > div {
-        display: flex;
-        flex-direction: row;
-        gap: 8px;
-        flex-shrink: 0;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-      }
-      .btn {
-         font-size: 0.85rem;
-         padding: 8px 14px;
-         flex-shrink: 0;
-      }
-      .card {
-        padding:24px;
-        gap:20px;
-        grid-template-columns:1fr;
-      }
-      .avatar {
-        max-width:100%;
-        margin-bottom:20px;
-      }
-      .info h1 {
-        font-size:1.8rem;
-      }
-      .profile-text {
-        font-size:0.95rem;
-        line-height:1.5;
-      }
-      .music-player {
-        margin-top:20px;
-        padding-top:16px;
-      }
-      .track-info {
-        font-size:0.85rem;
-      }
-      .music-player button {
-        font-size:0.95rem;
-        padding:10px 16px;
-      }
+      header { padding: 12px 16px; }
+      .brand { font-size:1.2rem; }
+      .btn { font-size: 0.85rem; padding: 8px 14px; }
+      .card { padding:24px; gap:20px; grid-template-columns:1fr; }
+      .avatar { max-width:100%; margin-bottom:20px; }
+      .info h1 { font-size:1.8rem; }
+      .profile-text { font-size:0.95rem; line-height:1.5; }
+      .music-player { margin-top:20px; padding-top:16px; }
+      .track-info { font-size:0.85rem; }
+      .music-player button { font-size:0.95rem; padding:10px 16px; }
     }
     @media (max-width:360px){
-      header {
-          padding: 10px 12px;
-      }
-      .brand {
-        font-size: 1.1rem;
-      }
-      header > div {
-        gap: 6px;
-      }
-      .btn {
-         font-size: 0.8rem;
-         padding: 6px 10px;
-      }
-      .card {
-        padding:16px;
-        gap:16px;
-      }
-      .info h1 {
-        font-size:1.6rem;
-      }
-      .profile-text {
-        font-size:0.9rem;
-      }
-      .btn {
-         font-size:0.75rem;
-         padding: 5px 8px;
-      }
+      header { padding: 10px 12px; }
+      .brand { font-size: 1.1rem; }
+      .btn { font-size: 0.8rem; padding: 6px 10px; }
+      .card { padding:16px; gap:16px; }
+      .info h1 { font-size:1.6rem; }
+      .profile-text { font-size:0.9rem; }
     }
   </style>
 </head>
@@ -203,6 +176,11 @@
     </div>
   </div>
 
+  <!-- КОПИРАЙТ -->
+  <footer>
+    © 2025 TryAnder - quietly coding since 2022
+  </footer>
+
   <script>
     const audio = document.getElementById("audio");
     const playBtn = document.getElementById("playBtn");
@@ -226,7 +204,6 @@
       }
     });
 
-    // возобновление видео при возврате на вкладку
     document.addEventListener("visibilitychange", ()=>{
       if(!document.hidden && document.body.classList.contains("video-active")){
         bgVideo.play().catch(()=>{});
