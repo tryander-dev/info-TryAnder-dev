@@ -52,7 +52,7 @@
       white-space: nowrap;
     }
 
-    /* FIX КНОПОК */
+    /* Исправление кнопок */
     header > div {
       display: flex;
       gap: 12px;
@@ -149,6 +149,9 @@
       color: #e0e0e0;
       text-align: left;
       font-weight: 400;
+      /* Добавляем перенос слов для мобильных устройств */
+      word-break: break-word;
+      overflow-wrap: break-word;
     }
 
     .profile-text strong {
@@ -252,16 +255,94 @@
       opacity: 1;
     }
 
-    /* МОБИЛКИ / СИЛЬНЫЙ ЗУМ */
+    /* --- АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ --- */
+
     @media (max-width: 520px) {
+      /* Хедер */
       header {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch; /* Растягиваем по ширине */
+        padding: 16px 20px; /* Уменьшаем горизонтальные отступы */
+      }
+
+      .brand {
+        font-size: 1.2rem; /* Уменьшаем размер шрифта */
+        margin-bottom: 12px; /* Добавляем отступ снизу */
       }
 
       header > div {
         width: 100%;
         justify-content: flex-start;
+        gap: 8px; /* Уменьшаем промежутки между кнопками */
+      }
+
+      .btn {
+        font-size: 0.85rem; /* Уменьшаем размер шрифта кнопок */
+        padding: 8px 16px; /* Уменьшаем отступы внутри кнопок */
+      }
+
+      /* Контейнер */
+      .container {
+        padding: 16px; /* Уменьшаем отступы контейнера */
+      }
+
+      /* Карточка */
+      .card {
+        padding: 24px; /* Уменьшаем отступы внутри карточки */
+        gap: 20px; /* Уменьшаем промежутки */
+        /* Изменяем сетку на стек для мобильных устройств */
+        grid-template-columns: 1fr; /* Одна колонка */
+        grid-template-rows: auto 1fr; /* Автоматическая высота аватара, остальное для текста */
+      }
+
+      .avatar {
+        max-width: 100%; /* Аватар занимает всю доступную ширину */
+        margin-bottom: 20px; /* Добавляем отступ снизу */
+      }
+
+      .info h1 {
+        font-size: 1.8rem; /* Уменьшаем заголовок */
+      }
+
+      .profile-text {
+        font-size: 0.95rem; /* Уменьшаем основной текст */
+        line-height: 1.5;
+      }
+
+      /* Музыкальный плеер */
+      .music-player {
+        margin-top: 20px;
+        padding-top: 16px;
+      }
+
+      .track-info {
+        font-size: 0.85rem;
+      }
+
+      .music-player button {
+        font-size: 0.95rem;
+        padding: 10px 16px;
+      }
+    }
+
+    /* Дополнительная адаптация для очень маленьких экранов */
+    @media (max-width: 360px) {
+      .card {
+        padding: 16px;
+        gap: 16px;
+      }
+
+      .info h1 {
+        font-size: 1.6rem;
+      }
+
+      .profile-text {
+        font-size: 0.9rem;
+      }
+
+      .btn {
+        font-size: 0.8rem;
+        padding: 6px 12px;
       }
     }
   </style>
@@ -277,8 +358,8 @@
   <header class="fade-in">
     <div class="brand">TRYANDER-TADV</div>
     <div>
-      <a href="#" class="btn">GitHub</a>
-      <a href="#" class="btn btn-discord">Discord</a>
+      <a href="https://github.com/Humichi1" target="_blank" class="btn">GitHub</a>
+      <a href="https://discordapp.com/users/1051915164313731212" target="_blank" class="btn btn-discord">Discord</a>
     </div>
   </header>
 
