@@ -2,14 +2,14 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>TryAnder-TADV | Unity Style</title>
+  <title>TryAnder-TADV | info</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Roboto Mono', monospace; }
     body { background:#0a0a0a; color:#f0f0f0; min-height:100vh; overflow-x:hidden; }
 
-    /* Анимация появления */
+    /* анимация входа — чтобы не резко */
     .fade-in-up {
       opacity: 0;
       transform: translateY(20px);
@@ -23,7 +23,6 @@
       }
     }
 
-    /* Верхняя панель */
     header {
       display:flex; justify-content:space-between; align-items:center;
       padding:16px 32px;
@@ -35,7 +34,6 @@
     .brand { font-weight:500; font-size:1.4rem; color:#fff; white-space:nowrap; }
     header > div { display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end; }
 
-    /* Кнопки */
     .btn {
       text-decoration:none; color:#fff; padding:10px 20px;
       border:1px solid rgba(255,255,255,0.1); border-radius:4px; background:rgba(30,30,30,0.15);
@@ -45,10 +43,8 @@
     .btn-discord { border-color:rgba(88,101,242,0.2); background:rgba(30,30,40,0.15); }
     .btn-discord:hover { background:rgba(50,50,70,0.25); border-color:rgba(88,101,242,0.8); color:#fff; }
 
-    /* Контейнер */
     .container { min-height:calc(100vh - 64px); display:flex; justify-content:center; align-items:center; padding:20px; }
 
-    /* Карточка */
     .card {
       background:rgba(15,15,15,0.15);
       backdrop-filter:blur(8px);
@@ -69,7 +65,7 @@
     .profile-text p { margin:12px 0; }
     .flag { display:inline-block; width:20px; height:14px; margin-right:8px; vertical-align:middle; border:1px solid rgba(255,255,255,0.05); }
 
-    /* Музыкальный плеер */
+    /* плеер — трек по кнопке + фоновое видео */
     .music-player { margin-top:25px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.05); }
     .track-info { opacity:0; transform:translateY(10px); transition:all 0.4s ease; margin-bottom:12px; text-align:center; font-size:0.95rem; }
     .track-info.visible { opacity:1; transform:translateY(0); }
@@ -81,28 +77,89 @@
     }
     .music-player button:hover { background:rgba(60,60,60,0.25); color:#fff; border-color:#fff; }
 
-    /* Видео фон */
+    /* фоновое видео — скрыто до нажатия Play */
     video#bgVideo { position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:0.8s; z-index:-1; pointer-events:none; }
     body.video-active video#bgVideo { opacity:1; }
 
-    /* Адаптив */
+    /* мобильная версия — всё сжимается, но читаемо */
     @media (max-width:520px){
-      header { flex-wrap:nowrap; padding:16px 20px; }
-      .brand { font-size:1.2rem; }
-      header > div { flex:1; justify-content:flex-end; gap:8px; }
-      .card { padding:24px; gap:20px; grid-template-columns:1fr; }
-      .avatar { max-width:100%; margin-bottom:20px; }
-      .info h1 { font-size:1.8rem; }
-      .profile-text { font-size:0.95rem; line-height:1.5; }
-      .music-player { margin-top:20px; padding-top:16px; }
-      .track-info { font-size:0.85rem; }
-      .music-player button { font-size:0.95rem; padding:10px 16px; }
+      header {
+        padding: 12px 16px;
+      }
+      .brand {
+        font-size:1.2rem;
+        flex-shrink: 1;
+        min-width: 0;
+      }
+      header > div {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        flex-shrink: 0;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+      .btn {
+         font-size: 0.85rem;
+         padding: 8px 14px;
+         flex-shrink: 0;
+      }
+      .card {
+        padding:24px;
+        gap:20px;
+        grid-template-columns:1fr;
+      }
+      .avatar {
+        max-width:100%;
+        margin-bottom:20px;
+      }
+      .info h1 {
+        font-size:1.8rem;
+      }
+      .profile-text {
+        font-size:0.95rem;
+        line-height:1.5;
+      }
+      .music-player {
+        margin-top:20px;
+        padding-top:16px;
+      }
+      .track-info {
+        font-size:0.85rem;
+      }
+      .music-player button {
+        font-size:0.95rem;
+        padding:10px 16px;
+      }
     }
     @media (max-width:360px){
-      .card { padding:16px; gap:16px; }
-      .info h1 { font-size:1.6rem; }
-      .profile-text { font-size:0.9rem; }
-      .btn { font-size:0.8rem; padding:6px 12px; }
+      header {
+          padding: 10px 12px;
+      }
+      .brand {
+        font-size: 1.1rem;
+      }
+      header > div {
+        gap: 6px;
+      }
+      .btn {
+         font-size: 0.8rem;
+         padding: 6px 10px;
+      }
+      .card {
+        padding:16px;
+        gap:16px;
+      }
+      .info h1 {
+        font-size:1.6rem;
+      }
+      .profile-text {
+        font-size:0.9rem;
+      }
+      .btn {
+         font-size:0.75rem;
+         padding: 5px 8px;
+      }
     }
   </style>
 </head>
@@ -169,6 +226,7 @@
       }
     });
 
+    // возобновление видео при возврате на вкладку
     document.addEventListener("visibilitychange", ()=>{
       if(!document.hidden && document.body.classList.contains("video-active")){
         bgVideo.play().catch(()=>{});
