@@ -1,336 +1,102 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>TryAnder-TADV | Unity Style</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Roboto Mono', monospace;
-    }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Roboto Mono', monospace; }
+    body { background:#0a0a0a; color:#f0f0f0; min-height:100vh; overflow-x:hidden; }
 
-    body {
-      background: #0a0a0a;
-      color: #f0f0f0;
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    .fade-in {
-      opacity: 0;
-      animation: fadeIn 1s forwards;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
+    /* Верхняя панель */
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 32px;
-      background: rgba(15, 15, 15, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(50, 50, 50, 0.6);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      gap: 16px;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:16px 32px;
+      background:rgba(15,15,15,0.3); /* сильно прозрачная */
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(50,50,50,0.2);
+      position:sticky; top:0; z-index:100; gap:16px;
     }
+    .brand { font-weight:500; font-size:1.4rem; color:#fff; white-space:nowrap; }
+    header > div { display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end; }
 
-    .brand {
-      font-weight: 500;
-      letter-spacing: 1px;
-      font-size: 1.4rem;
-      color: #fff;
-      white-space: nowrap;
-    }
-
-    header > div {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
+    /* Кнопки */
     .btn {
-      text-decoration: none;
-      color: #ccc;
-      padding: 10px 20px;
-      border: 1px solid #444;
-      border-radius: 4px;
-      background: rgba(30, 30, 30, 0.8);
-      transition: all 0.3s ease;
-      font-weight: 400;
-      font-size: 0.95rem;
-      white-space: nowrap;
+      text-decoration:none; color:#ccc; padding:10px 20px;
+      border:1px solid rgba(255,255,255,0.2); border-radius:4px; background:rgba(30,30,30,0.3);
+      transition:all 0.3s ease; font-weight:400; font-size:0.95rem; white-space:nowrap;
     }
+    .btn:hover { background:rgba(60,60,60,0.4); color:#fff; border-color:#fff; }
+    .btn-discord { border-color:rgba(88,101,242,0.3); background:rgba(30,30,40,0.3); }
+    .btn-discord:hover { background:rgba(50,50,70,0.4); border-color:rgba(88,101,242,0.8); color:#fff; }
 
-    .btn:hover {
-      background: rgba(60, 60, 60, 0.9);
-      color: #fff;
-      border-color: #fff;
-    }
+    /* Контейнер */
+    .container { min-height:calc(100vh - 64px); display:flex; justify-content:center; align-items:center; padding:20px; }
 
-    .btn-discord {
-      border-color: rgba(88, 101, 242, 0.5);
-      background: rgba(30, 30, 40, 0.7);
-    }
-
-    .btn-discord:hover {
-      background: rgba(50, 50, 70, 0.8);
-      border-color: rgba(88, 101, 242, 0.8);
-      color: #fff;
-    }
-
-    .container {
-      min-height: calc(100vh - 64px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      position: relative;
-      z-index: 1;
-    }
-
+    /* Карточка */
     .card {
-      background: rgba(15, 15, 15, 0.7);
-      backdrop-filter: blur(20px);
-      padding: 40px;
-      border-radius: 8px;
-      max-width: 800px;
-      width: 100%;
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 40px;
-      border: 1px solid rgba(50, 50, 50, 0.6);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      background:rgba(15,15,15,0.25); /* почти прозрачная */
+      backdrop-filter:blur(22px);
+      padding:40px; border-radius:8px;
+      max-width:800px; width:100%;
+      display:grid; grid-template-columns:180px 1fr; gap:40px;
+      border:1px solid rgba(50,50,50,0.15);
+      box-shadow:0 10px 30px rgba(0,0,0,0.3);
     }
+    .avatar { width:100%; max-width:180px; border-radius:4px; border:1px solid rgba(255,255,255,0.15); transition:0.3s; }
+    .avatar:hover { border-color:#fff; box-shadow:0 0 15px rgba(255,255,255,0.2); }
 
-    .avatar {
-      width: 100%;
-      max-width: 180px;
-      height: auto;
-      border-radius: 4px;
-      border: 1px solid #444;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      transition: all 0.3s ease;
-    }
+    .info { display:flex; flex-direction:column; justify-content:center; }
+    .info h1 { font-size:2.2rem; color:#fff; margin-bottom:12px; font-weight:500; }
+    .profile-text { font-size:1.05rem; line-height:1.6; color:#e0e0e0; }
+    .profile-text strong { font-weight:500; color:#fff; }
+    .profile-text p { margin:12px 0; }
+    .flag { display:inline-block; width:20px; height:14px; margin-right:8px; vertical-align:middle; border:1px solid rgba(255,255,255,0.15); }
 
-    .avatar:hover {
-      border-color: #fff;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-    }
-
-    .info {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .info h1 {
-      font-size: 2.2rem;
-      color: #fff;
-      margin-bottom: 12px;
-      letter-spacing: 1px;
-      font-weight: 500;
-    }
-
-    .profile-text {
-      font-size: 1.05rem;
-      line-height: 1.6;
-      color: #e0e0e0;
-      text-align: left;
-      font-weight: 400;
-      word-break: break-word;
-      overflow-wrap: break-word;
-    }
-
-    .profile-text strong {
-      font-weight: 500;
-      color: #fff;
-    }
-
-    .profile-text p {
-      margin: 12px 0;
-    }
-
-    .flag {
-      display: inline-block;
-      width: 20px;
-      height: 14px;
-      margin-right: 8px;
-      vertical-align: middle;
-      border: 1px solid rgba(255,255,255,0.2);
-      position: relative;
-      top: -2px;
-    }
-
-    .music-player {
-      margin-top: 25px;
-      padding-top: 20px;
-      border-top: 1px solid rgba(50, 50, 50, 0.6);
-    }
-
-    .track-info {
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.4s ease;
-      margin-bottom: 12px;
-      text-align: center;
-      font-size: 0.95rem;
-    }
-
-    .track-info.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .spotify-link {
-      color: #aaa;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .spotify-link:hover {
-      color: #fff;
-      text-decoration: underline;
-    }
-
+    /* Музыкальный плеер */
+    .music-player { margin-top:25px; padding-top:20px; border-top:1px solid rgba(50,50,50,0.15); }
+    .track-info { opacity:0; transform:translateY(10px); transition:all 0.4s ease; margin-bottom:12px; text-align:center; font-size:0.95rem; }
+    .track-info.visible { opacity:1; transform:translateY(0); }
+    .spotify-link { color:#aaa; text-decoration:none; transition:0.3s; }
+    .spotify-link:hover { color:#fff; text-decoration:underline; }
     .music-player button {
-      cursor: pointer;
-      background: rgba(30, 30, 30, 0.8);
-      color: #f0f0f0;
-      border: 1px solid #444;
-      padding: 12px 20px;
-      border-radius: 4px;
-      transition: all 0.3s ease;
-      width: 100%;
-      font-weight: 400;
-      font-size: 1rem;
+      cursor:pointer; background:rgba(30,30,30,0.3); color:#f0f0f0; border:1px solid rgba(255,255,255,0.2);
+      padding:12px 20px; border-radius:4px; transition:all 0.3s ease; width:100%; font-weight:400; font-size:1rem;
     }
+    .music-player button:hover { background:rgba(60,60,60,0.4); color:#fff; border-color:#fff; }
 
-    .music-player button:hover {
-      background: rgba(60, 60, 60, 0.9);
-      color: #fff;
-      border-color: #fff;
+    /* Видео фон */
+    video#bgVideo { position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:0.8s; z-index:-1; pointer-events:none; }
+    body.video-active video#bgVideo { opacity:1; }
+
+    /* Адаптив */
+    @media (max-width:520px){
+      header { flex-wrap:nowrap; padding:16px 20px; }
+      .brand { font-size:1.2rem; }
+      header > div { flex:1; justify-content:flex-end; gap:8px; }
+      .card { padding:24px; gap:20px; grid-template-columns:1fr; }
+      .avatar { max-width:100%; margin-bottom:20px; }
+      .info h1 { font-size:1.8rem; }
+      .profile-text { font-size:0.95rem; line-height:1.5; }
+      .music-player { margin-top:20px; padding-top:16px; }
+      .track-info { font-size:0.85rem; }
+      .music-player button { font-size:0.95rem; padding:10px 16px; }
     }
-
-    .grid-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image:
-        linear-gradient(rgba(30, 30, 30, 0.2) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(30, 30, 30, 0.2) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    video#bgVideo {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 0.8s ease;
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    body.video-active video#bgVideo {
-      opacity: 1;
-    }
-
-    @media (max-width: 520px) {
-      header {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 16px 20px;
-      }
-      .brand {
-        font-size: 1.2rem;
-        margin-bottom: 12px;
-      }
-      header > div {
-        width: 100%;
-        justify-content: flex-start;
-        gap: 8px;
-      }
-      .btn {
-        font-size: 0.85rem;
-        padding: 8px 16px;
-      }
-      .container {
-        padding: 16px;
-      }
-      .card {
-        padding: 24px;
-        gap: 20px;
-        grid-template-columns: 1fr;
-      }
-      .avatar {
-        max-width: 100%;
-        margin-bottom: 20px;
-      }
-      .info h1 {
-        font-size: 1.8rem;
-      }
-      .profile-text {
-        font-size: 0.95rem;
-        line-height: 1.5;
-      }
-      .music-player {
-        margin-top: 20px;
-        padding-top: 16px;
-      }
-      .track-info {
-        font-size: 0.85rem;
-      }
-      .music-player button {
-        font-size: 0.95rem;
-        padding: 10px 16px;
-      }
-    }
-
-    @media (max-width: 360px) {
-      .card {
-        padding: 16px;
-        gap: 16px;
-      }
-      .info h1 {
-        font-size: 1.6rem;
-      }
-      .profile-text {
-        font-size: 0.9rem;
-      }
-      .btn {
-        font-size: 0.8rem;
-        padding: 6px 12px;
-      }
+    @media (max-width:360px){
+      .card { padding:16px; gap:16px; }
+      .info h1 { font-size:1.6rem; }
+      .profile-text { font-size:0.9rem; }
+      .btn { font-size:0.8rem; padding:6px 12px; }
     }
   </style>
 </head>
-
 <body>
-  <div class="grid-overlay"></div>
-
   <video id="bgVideo" muted loop playsinline disableRemotePlayback>
     <source src="video/background.mp4" type="video/mp4">
   </video>
 
-  <header class="fade-in">
+  <header>
     <div class="brand">TRYANDER-TADV</div>
     <div>
       <a href="https://github.com/Humichi1" target="_blank" class="btn">GitHub</a>
@@ -338,7 +104,7 @@
     </div>
   </header>
 
-  <div class="container fade-in">
+  <div class="container">
     <div class="card">
       <img src="avatar.png" alt="Аватар" class="avatar">
       <div class="info">
@@ -347,10 +113,9 @@
           <p><strong>TADV</strong> is Tretyakov Alexander, 17 years old.</p>
           <p><strong>Focus:</strong> .NET & Professional Unity app and games developing</p>
           <p>I speak Russian and English.</p>
-          <p><strong>Main:</strong> C#,.NET, Unity 3D/2D, Web Development</p>
+          <p><strong>Main:</strong> C#, .NET, Unity 3D/2D, Web Development</p>
           <p><img src="flag-russia.png" alt="Russia" class="flag">Russia</p>
         </div>
-
         <div class="music-player">
           <div class="track-info" id="trackInfo">
             <a href="https://open.spotify.com/track/6AEZOTbeGQn9lKKthmLwJa" target="_blank" class="spotify-link">
@@ -372,12 +137,12 @@
     const bgVideo = document.getElementById("bgVideo");
     const trackInfo = document.getElementById("trackInfo");
 
-    function togglePlay() {
-      if (audio.paused) {
-        audio.play().then(() => {
+    playBtn.addEventListener("click", () => {
+      if(audio.paused){
+        audio.play().then(()=>{
           playBtn.textContent = "⏸ Pause Track";
           trackInfo.classList.add("visible");
-          bgVideo.play().catch(() => {});
+          bgVideo.play().catch(()=>{});
           document.body.classList.add("video-active");
         });
       } else {
@@ -387,15 +152,13 @@
         trackInfo.classList.remove("visible");
         document.body.classList.remove("video-active");
       }
-    }
-
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden && document.body.classList.contains("video-active")) {
-        bgVideo.play().catch(() => {});
-      }
     });
 
-    playBtn.addEventListener("click", togglePlay);
+    document.addEventListener("visibilitychange", ()=>{
+      if(!document.hidden && document.body.classList.contains("video-active")){
+        bgVideo.play().catch(()=>{});
+      }
+    });
   </script>
 </body>
 </html>
