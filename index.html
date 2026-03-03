@@ -95,12 +95,66 @@
       border:1px solid rgba(255,255,255,0.1);
       transition: all 0.3s ease;
       transform: scale(1);
+      cursor: pointer;
     }
     .avatar:hover {
       transform: scale(1.03);
       border-color: #fff;
       box-shadow: 0 0 20px rgba(255,255,255,0.15);
     }
+    .avatar.grabbed {
+      opacity: 0;
+      transform: scale(0.92);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    /* Avatar lightbox */
+    .avatar-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0);
+      backdrop-filter: blur(0px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, backdrop-filter 0.3s ease, background 0.3s ease;
+    }
+    .avatar-lightbox.open {
+      opacity: 1;
+      pointer-events: all;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(12px);
+    }
+    .avatar-lightbox img {
+      max-width: min(80vw, 420px);
+      max-height: 80vh;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      transform: scale(0.88);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      user-select: none;
+    }
+    .avatar-lightbox.open img {
+      transform: scale(1);
+    }
+    .avatar-lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      font-size: 1.6rem;
+      color: rgba(255,255,255,0.5);
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+      background: none;
+      border: none;
+      padding: 4px 8px;
+    }
+    .avatar-lightbox-close:hover { color: #fff; }
 
     .info { display:flex; flex-direction:column; justify-content:center; }
     .info h1 { font-size:2.2rem; color:#fff; margin-bottom:12px; font-weight:500; }
@@ -233,6 +287,12 @@
     © 2026 TryAnder - coding and designing since 2022
   </footer>
 
+  <!-- Avatar lightbox -->
+  <div class="avatar-lightbox" id="avatarLightbox">
+    <button class="avatar-lightbox-close" id="avatarClose" aria-label="Close">✕</button>
+    <img src="avatar.png" alt="TryAnder avatar" draggable="false">
+  </div>
+
   <script>
     const audio = document.getElementById("audio");
     const playBtn = document.getElementById("playBtn");
@@ -284,6 +344,19 @@
             bgVideo.play().catch(() => {});
         }
     });
+
+    // Avatar lightbox
+    const avatarImg = document.querySelector('.avatar');
+    const lightbox  = document.getElementById('avatarLightbox');
+    const closeBtn  = document.getElementById('avatarClose');
+
+    function openLightbox()  { lightbox.classList.add('open'); avatarImg.classList.add('grabbed'); document.body.style.overflow = 'hidden'; }
+    function closeLightbox() { lightbox.classList.remove('open'); avatarImg.classList.remove('grabbed'); document.body.style.overflow = ''; }
+
+    avatarImg.addEventListener('click', openLightbox);
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
     // Real-time visit counter via CounterAPI
     (async () => {
