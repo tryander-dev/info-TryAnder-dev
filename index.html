@@ -215,6 +215,18 @@
       0%, 100% { opacity: 1; }
       50% { opacity: 0.4; }
     }
+    .counter-refresh {
+      background: none;
+      border: none;
+      color: #555;
+      cursor: pointer;
+      font-size: 0.85rem;
+      padding: 0;
+      line-height: 1;
+      transition: color 0.2s, transform 0.3s ease;
+    }
+    .counter-refresh:hover { color: #aaa; transform: rotate(180deg); }
+
     .visit-counter #visitCount {
       color: #e0e0e0;
       font-weight: 500;
@@ -266,7 +278,7 @@
           <p>I speak Russian and English.</p>
           <p><strong>Main:</strong> C#, .NET, Unity 3D/2D, Web Development</p>
           <p><img src="flag-russia.png" alt="Russia" class="flag">Russia</p>
-          <p><div class="visit-counter"><span class="counter-dot"></span><span id="visitCount">...</span> page visits</div></p>
+          <p><div class="visit-counter"><span class="counter-dot"></span><span id="visitCount">...</span> page visits<button class="counter-refresh" title="Refresh page" onclick="location.reload()">↻</button></div></p>
         </div>
         <div class="music-player">
           <div class="track-info" id="trackInfo">
@@ -359,22 +371,24 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
     // Real-time visit counter via CounterAPI
-    (async () => {
+    const countEl = document.getElementById("visitCount");
+
+    async function fetchVisitCount() {
       try {
-        const res = await fetch("https://api.counterapi.dev/v1/tryander-tadv/page-visits/up", {
-          method: "GET"
-        });
+        const res = await fetch("https://api.counterapi.dev/v1/tryander-tadv/page-visits/up");
         if (res.ok) {
           const data = await res.json();
           const count = data.count ?? data.value ?? "—";
-          document.getElementById("visitCount").textContent = count.toLocaleString();
+          countEl.textContent = typeof count === "number" ? count.toLocaleString() : count;
         } else {
-          document.getElementById("visitCount").textContent = "—";
+          countEl.textContent = "—";
         }
       } catch {
-        document.getElementById("visitCount").textContent = "—";
+        countEl.textContent = "—";
       }
-    })();
+    }
+
+    fetchVisitCount();
   </script>
 </body>
 
